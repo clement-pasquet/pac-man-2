@@ -4,7 +4,7 @@ Joueur en Multijoueur à Pacman grâce à une liaison UDP.
 ## Le principe ?
 ![hi](https://blogdemaths.files.wordpress.com/2014/04/pac-man_original.png?w=584)
 
-1 joueur *au minimum* controlent des Pacmans 
+*Au minimum* 1 joueur ou plus controlent des Pacmans 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Pacman.svg/1200px-Pacman.svg.png" alt="Image Pacman" width="20">
  dont le but est de manger le plus possible de petites boules appelés **gommes** sans se faire manger par les fantomes 
  <img src="https://ssb.wiki.gallery/images/c/cb/Ghosts_%28Pac-Man%29.png" alt="Mon Image" width="30">
@@ -41,5 +41,5 @@ python3 client.py
 - **D pour aller à droite**
 - **Z pour reculer**
 
-## Diagramme
+## Diagramme de Séquence
 ![hi](./diagramme_de_sequence.PNG)

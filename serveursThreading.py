@@ -8,31 +8,79 @@ PORT =  8000            # n° port écoute du serveur
 import sys
 import socket
 import threading
+import random
 
-def serveurTCP_simple():
-    mySocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    mySocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    try:
-        mySocket.bind((HOTE,PORT))
-    except socket.error:
-        print("Liaison du socket UDP à l'adresse et au port choisit a échoué.")
-        sys.exit()
+class Pacman:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    def move_left(self):
+        self.x -= 1
+    def move_right(self):
+        self.x += 1
+    def move_up(self):
+        self.y -= 1
+    def move_down(self):
+        self.y += 1
+    def draw(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        for i in range(10):
+            for j in range(20):
+                if i == self.y and j == self.x:
+                    sys.stdout.write('C')
+                else:
+                    is_ghost = False
+                    for ghost in ghosts:
+                        if i == ghost.y and j == ghost.x:
+                            sys.stdout.write('F')
+                            is_ghost = True
+                            break
+                    if not is_ghost:
+                        sys.stdout.write('.')
+            sys.stdout.write('\n')
+        sys.stdout.flush()
+
+class Fantome:
+    def __init__(self):
+        self.x = random.randint(0, 19)
+        self.y = random.randint(0, 9)
+    def move(self, pacman):
+        directions = [(0, -1), (0, 1), (-1, 0), (1, 0)]
+        dx, dy = random.choice(directions)
+        new_x = self.x + dx
+        new_y = self.y + dy
+        if new_x >= 0 and new_x < 20:
+            self.x = new_x
+        if new_y >= 0 and new_y < 10:
+            self.y = new_y
+
+if __name__ == '__main__':
+    pacman = Pacman(10, 5)
+    ghosts = [Fantome() for _ in range(random.randint(1, 3))]
     
-    while 1: 
-        msgClient, adresseClient = mySocket.recvfrom(1024)
-        print( "Client connecté, adresse IP %s, port %s" % (adresseClient[0], adresseClient[1]) )
-        msgServeur = msgClient
-        mySocket.sendto(msgServeur, adresseClient)
+    while True:
+        pacman.draw()
+        for ghost in ghosts:
+            ghost.move(pacman)
+            if pacman.x == ghost.x and pacman.y == ghost.y:
+                print("Pacman a été touché par un fantôme ! Game over.")
+                sys.exit()
 
+        if os.name == 'nt':
+            key = msvcrt.getch().decode('utf-8')
+        else:
+            key = getch()
+        if key == 'a' or key == 'c':
+            break
+        elif key == 'q':
+            pacman.move_left()
+        elif key == 'd':
+            pacman.move_right()
+        elif key == 'z':
+            pacman.move_up()
+        elif key == 's':
+            pacman.move_down()
 
-    print("Serveur fermé.")
-    mySocket.close() 
-    sys.exit()
-
-
-
-import socket
-import threading
 
 def serveurUDP_parallele():
     class ThreadClient(threading.Thread):

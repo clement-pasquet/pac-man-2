@@ -14,3 +14,32 @@ Si un joueur mange les grosses gommes
  alors il devient invincible et les rôles s'inversent temporairement et le pacman peut manger les fantômes.
 
  La partie s'arrête quand suffisamment de gommes ont été mangées.
+## Comment l'utiliser ?
+Le jeu fonctionne avec deux machines : un serveur et zéro ou plus clients.
+
+*Il faut donc* **exécuter le fichier _serveur.py_ sur la machine hôte avec cette commande :**
+```bash 
+python serveur.py
+```
+ou
+```bash 
+python3 serveur.py
+```
+
+Et **sur la ou les machines clientes** :
+```bash
+python client.py
+```
+ou
+```bash
+python3 client.py
+```
+
+## Les Commandes
+- **Z pour avancer tout droit**
+- **Q pour aller à gauche**
+- **D pour aller à droite**
+- **Z pour reculer**
+
+## Diagramme
+![hi](./diagramme_de_sequence.PNG)

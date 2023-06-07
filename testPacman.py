@@ -26,17 +26,25 @@ class Pacman:
         self.x = x
         self.y = y
     def move_left(self):
-        self.x -= 1
+        print(self.x)
+        if self.x -1 > 0:
+            self.x -= 1
+
     def move_right(self):
-        self.x += 1
+        if self.x +1 < 19:
+            self.x += 1
     def move_up(self):
-        self.y -= 1
+        if self.y -1 > 0:
+            self.y -= 1
     def move_down(self):
-        self.y += 1
+        if self.y -1 < 7:
+            self.y += 1
     def draw(self):
         os.system('cls' if os.name == 'nt' else 'clear')
-        for i in range(10):
-            for j in range(20):
+        hauteur = 10
+        largeur = 20
+        for i in range(hauteur):
+            for j in range(largeur):
                 if i == self.y and j == self.x:
                     sys.stdout.write('C')
                 else:
@@ -47,7 +55,12 @@ class Pacman:
                             is_ghost = True
                             break
                     if not is_ghost:
-                        sys.stdout.write('.')
+                        if j == largeur-1 or j == 0:
+                            sys.stdout.write('|')
+                        elif  i == 0 and j > 0 or i == 0 and j < largeur or i == hauteur-1 and j > 0 or i == hauteur-1 and j < largeur  :
+                            sys.stdout.write('~')
+                        else :
+                            sys.stdout.write('.')
             sys.stdout.write('\n')
         sys.stdout.flush()
 
@@ -60,9 +73,9 @@ class Fantome:
         dx, dy = random.choice(directions)
         new_x = self.x + dx
         new_y = self.y + dy
-        if new_x >= 0 and new_x < 20:
+        if new_x >= 1 and new_x < 19:
             self.x = new_x
-        if new_y >= 0 and new_y < 10:
+        if new_y >= 1 and new_y < 9:
             self.y = new_y
 
 

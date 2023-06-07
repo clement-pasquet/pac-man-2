@@ -69,7 +69,7 @@ class Fantome:
         self.x = random.randint(1, 18)
         self.y = random.randint(1, 8)
         self.difficulte = 1  # Valeur de difficulté par défaut
-        self.preference = 3  # Nombre de préférences envers la direction de Pac-Man
+        self.preference = 5  # Nombre de préférences envers la direction de Pac-Man
 
     def move(self, pacman):
         directions = []
@@ -84,44 +84,32 @@ class Fantome:
             directions.append((0, -1))
         if self.y < 8:
             directions.append((0, 1))
-
         if len(directions) > 0:
             # Calculer les distances entre les positions du fantôme et de Pac-Man
             distance_x = pacman.x - self.x
             distance_y = pacman.y - self.y
-
             # Préférence envers la direction de Pac-Man
             if self.preference > 0:
                 if distance_x < 0:
                     dx = -1
                 elif distance_x > 0:
                     dx = 1
-
                 if distance_y < 0:
                     dy = -1
                 elif distance_y > 0:
                     dy = 1
-
                 self.preference -= 1
             else:
                 # Déplacement aléatoire parmi les directions possibles
                 dx, dy = random.choice(directions)
-
         self.x += dx * self.difficulte
         self.y += dy * self.difficulte
-
     def set_difficulte(self, difficulte):
         self.difficulte = difficulte
-
     def set_preference(self, preference):
         self.preference = preference
 
 
-    def set_difficulte(self, difficulte):
-        self.difficulte = difficulte
-
-    def set_preference(self, preference):
-        self.preference = preference
 
 
 
@@ -130,7 +118,6 @@ if __name__ == '__main__':
     ghosts = [Fantome() for _ in range(random.randint(1, 3))]
     while True:
         pacman.draw()
-
         for ghost in ghosts:
             ghost.move(pacman)
             if pacman.x == ghost.x and pacman.y == ghost.y:

@@ -46,7 +46,7 @@ class Pacman:
         for i in range(hauteur):
             for j in range(largeur):
                 if i == self.y and j == self.x:
-                    sys.stdout.write('C')
+                    sys.stdout.write('P')
                 else:
                     is_ghost = False
                     for ghost in ghosts:
@@ -66,17 +66,63 @@ class Pacman:
 
 class Fantome:
     def __init__(self):
-        self.x = random.randint(0, 19)
-        self.y = random.randint(0, 9)
+        self.x = random.randint(1, 18)
+        self.y = random.randint(1, 8)
+        self.difficulte = 1  # Valeur de difficulté par défaut
+        self.preference = 3  # Nombre de préférences envers la direction de Pac-Man
+
     def move(self, pacman):
-        directions = [(0, -1), (0, 1), (-1, 0), (1, 0)]
-        dx, dy = random.choice(directions)
-        new_x = self.x + dx
-        new_y = self.y + dy
-        if new_x >= 1 and new_x < 19:
-            self.x = new_x
-        if new_y >= 1 and new_y < 9:
-            self.y = new_y
+        directions = []
+        dx, dy = 0, 0
+
+        # Ajouter les directions possibles en fonction de la position actuelle du fantôme
+        if self.x > 1:
+            directions.append((-1, 0))
+        if self.x < 18:
+            directions.append((1, 0))
+        if self.y > 1:
+            directions.append((0, -1))
+        if self.y < 8:
+            directions.append((0, 1))
+
+        if len(directions) > 0:
+            # Calculer les distances entre les positions du fantôme et de Pac-Man
+            distance_x = pacman.x - self.x
+            distance_y = pacman.y - self.y
+
+            # Préférence envers la direction de Pac-Man
+            if self.preference > 0:
+                if distance_x < 0:
+                    dx = -1
+                elif distance_x > 0:
+                    dx = 1
+
+                if distance_y < 0:
+                    dy = -1
+                elif distance_y > 0:
+                    dy = 1
+
+                self.preference -= 1
+            else:
+                # Déplacement aléatoire parmi les directions possibles
+                dx, dy = random.choice(directions)
+
+        self.x += dx * self.difficulte
+        self.y += dy * self.difficulte
+
+    def set_difficulte(self, difficulte):
+        self.difficulte = difficulte
+
+    def set_preference(self, preference):
+        self.preference = preference
+
+
+    def set_difficulte(self, difficulte):
+        self.difficulte = difficulte
+
+    def set_preference(self, preference):
+        self.preference = preference
+
 
 
 if __name__ == '__main__':

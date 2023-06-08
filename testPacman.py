@@ -22,9 +22,11 @@ else:
         return ch
 
 class Pacman:
-    def __init__(self, x, y):
+    def __init__(self, x=10, y=5):
         self.x = x
         self.y = y
+        self.map = b""
+        
     def move_left(self):
         print(self.x)
         if self.x -1 > 0:
@@ -39,30 +41,43 @@ class Pacman:
     def move_down(self):
         if self.y -1 < 7:
             self.y += 1
+    def setMap(self, map2):
+        self.map = map2
+    def getMap(self):
+        return self.map
     def draw(self):
         os.system('cls' if os.name == 'nt' else 'clear')
         hauteur = 10
         largeur = 20
+        ghosts = [Fantome() for _ in range(random.randint(1, 3))]
         for i in range(hauteur):
             for j in range(largeur):
                 if i == self.y and j == self.x:
+                    self.map+= b"P"
                     sys.stdout.write('P')
                 else:
                     is_ghost = False
                     for ghost in ghosts:
                         if i == ghost.y and j == ghost.x:
+                            self.map+= b"F"
                             sys.stdout.write('F')
                             is_ghost = True
                             break
                     if not is_ghost:
                         if j == largeur-1 or j == 0:
+                            self.map+= b"|"
                             sys.stdout.write('|')
                         elif  i == 0 and j > 0 or i == 0 and j < largeur or i == hauteur-1 and j > 0 or i == hauteur-1 and j < largeur  :
+                            self.map+= b"~"
                             sys.stdout.write('~')
                         else :
+                            self.map+= b"."
                             sys.stdout.write('.')
+            self.map+=b"\n"
             sys.stdout.write('\n')
+        self.setMap(self.map)
         sys.stdout.flush()
+        return self.map
 
 class Fantome:
     def __init__(self):

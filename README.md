@@ -6,7 +6,7 @@ Joueur en Multijoueur à Pacman grâce à une liaison UDP.
 
 *Au minimum* 1 joueur ou plus controlent des Pacmans 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Pacman.svg/1200px-Pacman.svg.png" alt="Image Pacman" width="20">
- dont le but est de manger le plus possible de petites boules appelés **gommes** sans se faire manger par les fantomes 
+ dont le but est de survivre le plus longtemps sans être touché par un fantôme.
  <img src="https://ssb.wiki.gallery/images/c/cb/Ghosts_%28Pac-Man%29.png" alt="Mon Image" width="30">
  .
 Si un joueur mange les grosses gommes 

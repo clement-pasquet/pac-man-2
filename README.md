@@ -38,8 +38,9 @@ python3 client.py
 ## Les Commandes
 - **Z pour avancer tout droit**
 - **Q pour aller à gauche**
+- **S pour reculer**
 - **D pour aller à droite**
-- **Z pour reculer**
+- **C pour quitter ( côté client )**
 
 ## Diagramme de Séquence
-![hi](./diagramme_de_sequence.PNG)
+![hi](./diagramme_de_sequence2.PNG.jpg)

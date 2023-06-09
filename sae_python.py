@@ -67,6 +67,8 @@ def serveurUDP_simple():
                     mySocket.close()
                     sys.exit()
 
+            murs_x = [2,2]
+            murs_y = [1,3]
             current_map = pacman.draw(ghosts,murs_x,murs_y)
             msgServeur = bytes(current_map)
             mySocket.sendto(msgServeur, adresseClient)

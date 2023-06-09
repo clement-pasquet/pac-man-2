@@ -166,10 +166,14 @@ class Fantome:
 if __name__ == '__main__':
     pacman = Pacman(10, 5)
     ghosts = [Fantome() for _ in range(random.randint(1, 3))]
+    murs_x = [2, 2]
+    murs_y = [1, 3]
     while True:
-        pacman.draw([Fantome() for _ in range(3)])
+        pacman.draw(ghosts, murs_x,murs_y)
+
         for ghost in ghosts:
             ghost.move(pacman)
+            ghost.preference = 15
             if pacman.x == ghost.x and pacman.y == ghost.y:
                 print("Pacman a été touché par un fantôme ! Game over.")
                 sys.exit()
@@ -183,10 +187,10 @@ if __name__ == '__main__':
         if key == 'a' or key == 'c':
             break
         elif key == 'q':
-            pacman.move_left()
+            pacman.move_left(murs_x,murs_y)
         elif key == 'd':
-            pacman.move_right()
+            pacman.move_right(murs_x,murs_y)
         elif key == 'z':
-            pacman.move_up()
+            pacman.move_up(murs_x,murs_y)
         elif key == 's':
-            pacman.move_down()
+            pacman.move_down(murs_x,murs_y)

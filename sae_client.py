@@ -47,7 +47,7 @@ def display_map(map_to_display, score):
 
 def clientUDP():
     mySocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    msgClient = input("Message ? ")
+    msgClient = input("Message ? ( start ) ")
     mySocket.sendto(bytes(msgClient, 'utf-8'), (HOTE, PORT))
     if msgClient == "":
         print("Sortie du programme")
@@ -60,19 +60,24 @@ def clientUDP():
         if keyboard.is_pressed('z'):
             print("Avancer")
             msgClient = "avant"
+            client.update_score(1)
         elif keyboard.is_pressed('q'):
             print("Gauche")
             msgClient = "gauche"
+            client.update_score(1)
         elif keyboard.is_pressed('s'):
             print("Arrière")
             msgClient = "arriere"
+            client.update_score(1)
         elif keyboard.is_pressed('d'):
             print("Droite")
             msgClient = "droite"
+            client.update_score(1)
         elif keyboard.is_pressed('c'):
             sys.exit()
         elif keyboard.is_pressed('esc'):
             sys.exit()
+        
 
 
 
@@ -84,15 +89,18 @@ def clientUDP():
         # Mettre à jour la carte du client de manière incrémentale
         client.set_map(new_map)
 
-        # Mise à jour du score du client
-        client.update_score(1)
+        if client.score == 50:
+            print("Vous avez gagné !")
+            mySocket.close()
+            sys.exit()
+
 
         # Afficher la carte mise à jour et le score sur le terminal
         map_to_display = client.get_map()
         display_map(map_to_display, client.score)
 
         # Attendre 0.5 seconde entre chaque mise à jour
-        time.sleep(0.3)
+        time.sleep(0.1)
 
         if msgClient.upper() == "FIN" or msgClient == "":
             break

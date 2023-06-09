@@ -26,26 +26,52 @@ class Pacman:
         self.x = x
         self.y = y
         self.map = b""
-        
-    def move_left(self):
-        print(self.x)
-        if self.x -1 > 0:
-            self.x -= 1
+        self.mursX = []
+        self.mursY = []
 
-    def move_right(self):
+    def move_left(self,murs_x,murs_y):
+        print(self.x)
+        x = self.x -1
+        y = self.y
+        compteur = 0
+        for i in range(len(murs_x)):
+            if x == murs_x[i] and y == murs_y[i] :
+                compteur = 1
+        if self.x -1 > 0 and compteur == 0:
+            self.x -= 1
+    def move_right(self,murs_x,murs_y):
+        x = self.x + 1
+        y = self.y
+        compteur = 0
+        for i in range(len(murs_x)):
+            if x == murs_x[i] and y == murs_y[i] :
+                compteur = 1
         if self.x +1 < 19:
             self.x += 1
-    def move_up(self):
-        if self.y -1 > 0:
+    def move_up(self,murs_x,murs_y):
+        x = self.x
+        y = self.y - 1
+        compteur = 0
+        for i in range(len(murs_x)):
+            if x == murs_x[i] and y == murs_y[i] :
+                compteur = 1
+        if self.y - 1 > 0:
             self.y -= 1
-    def move_down(self):
-        if self.y -1 < 7:
+    def move_down(self,murs_x,murs_y):
+        x = self.x
+        y = self.y + 1
+        compteur = 0
+        for i in range(len(murs_x)):
+            if x == murs_x[i] and y == murs_y[i] :
+                compteur = 1
+        if self.y + 1 < 9:
             self.y += 1
+
     def setMap(self, map2):
         self.map = map2
     def getMap(self):
         return self.map
-    def draw(self, ghosts):
+    def draw(self, ghosts,murs_x,murs_y):
         os.system('cls' if os.name == 'nt' else 'clear')
         hauteur = 10
         largeur = 20
@@ -70,9 +96,18 @@ class Pacman:
                         elif  i == 0 and j > 0 or i == 0 and j < largeur or i == hauteur-1 and j > 0 or i == hauteur-1 and j < largeur  :
                             self.map+= b"~"
                             sys.stdout.write('~')
-                        else :
-                            self.map+= b"."
-                            sys.stdout.write('.')
+                        else:
+                            is_wall = False
+                            for wall_x, wall_y in zip(murs_x, murs_y):
+                                if i == wall_x and j == wall_y:
+                                    self.map += b"X"
+                                    sys.stdout.write('X')
+                                    is_wall = True
+                                    break
+                            if not is_wall:
+                                self.map+= b"."
+                                sys.stdout.write('.')
+
             self.map+=b"\n"
             sys.stdout.write('\n')
         self.setMap(self.map)

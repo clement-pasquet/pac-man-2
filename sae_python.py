@@ -27,25 +27,36 @@ def serveurUDP_simple():
             pacman = pac.Pacman()
             ghosts = [pac.Fantome() for _ in range(3)]
             for i in range(len(ghosts)):
-                
-                ghosts[i].x = 1
-                ghosts[i].y = 1
+                if i == 0:
+                    ghosts[i].x = 2
+                    ghosts[i].y = 17
+                if i == 1:
+                    ghosts[i].x = 7
+                    ghosts[i].y = 17
+                if i == 2:
+                    ghosts[i].x = 4
+                    ghosts[i].y = 1
+                if i > 2:
+                    ghosts[i].x = 1
+                    ghosts[i].y = 1
+                ghosts[i].preference = 1
 
-                
-            current_map = pacman.draw(ghosts)
+            murs_x = [2,2]
+            murs_y = [1,3]
+            current_map = pacman.draw(ghosts,murs_x,murs_y)
             msgServeur = bytes(current_map)
             mySocket.sendto(msgServeur, adresseClient)
             
 
         elif msgClient.lower() in ["droite", "gauche", "avant", "arriere"]:
             if msgClient.lower() == "droite":
-                pacman.move_right()
+                pacman.move_right(murs_x,murs_y)
             elif msgClient.lower() == "gauche":
-                pacman.move_left()
+                pacman.move_left(murs_x,murs_y)
             elif msgClient.lower() == "avant":
-                pacman.move_up()
+                pacman.move_up(murs_x,murs_y)
             elif msgClient.lower() == "arriere":
-                pacman.move_down()
+                pacman.move_down(murs_x,murs_y)
             elif msgClient.lower() == "plusdefantome":
                 ghosts.append(pac.Fantome())
 
@@ -56,7 +67,7 @@ def serveurUDP_simple():
                     mySocket.close()
                     sys.exit()
 
-            current_map = pacman.draw(ghosts)
+            current_map = pacman.draw(ghosts,murs_x,murs_y)
             msgServeur = bytes(current_map)
             mySocket.sendto(msgServeur, adresseClient)
 

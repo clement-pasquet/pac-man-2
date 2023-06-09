@@ -22,7 +22,7 @@ else:
         return ch
 
 class Pacman:
-    def __init__(self, x=10, y=5):
+    def __init__(self,x=10, y=5):
         self.x = x
         self.y = y
         self.map = b""
@@ -45,11 +45,11 @@ class Pacman:
         self.map = map2
     def getMap(self):
         return self.map
-    def draw(self):
+    def draw(self, ghosts):
         os.system('cls' if os.name == 'nt' else 'clear')
         hauteur = 10
         largeur = 20
-        ghosts = [Fantome() for _ in range(random.randint(1, 3))]
+        self.map = b""
         for i in range(hauteur):
             for j in range(largeur):
                 if i == self.y and j == self.x:
@@ -81,8 +81,8 @@ class Pacman:
 
 class Fantome:
     def __init__(self):
-        self.x = random.randint(1, 18)
-        self.y = random.randint(1, 8)
+        self.x = 1
+        self.y = 1
         self.difficulte = 1  # Valeur de difficulté par défaut
         self.preference = 5  # Nombre de préférences envers la direction de Pac-Man
 
@@ -132,7 +132,7 @@ if __name__ == '__main__':
     pacman = Pacman(10, 5)
     ghosts = [Fantome() for _ in range(random.randint(1, 3))]
     while True:
-        pacman.draw()
+        pacman.draw([Fantome() for _ in range(3)])
         for ghost in ghosts:
             ghost.move(pacman)
             if pacman.x == ghost.x and pacman.y == ghost.y:

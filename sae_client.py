@@ -10,6 +10,7 @@ PORT = 8000
 class GameClient:
     def __init__(self):
         self.map = None
+        self.score = 0
 
     def set_map(self, new_map):
         # Convertir la nouvelle carte en une liste de listes
@@ -31,27 +32,18 @@ class GameClient:
         # Retourne une copie de la carte actuelle
         return [row[:] for row in self.map]
     
-def display_map(map_to_display):
-    # Efface le terminal
-    os.system('cls' if os.name == 'nt' else 'clear')
+    def update_score(self, increment):
+        self.score += increment
 
-    # Dictionnaire de correspondance des symboles
-    symbol_mapping = {
-        '|': '|',
-        '~': '.',
-        'P': 'P',
-        'F': 'F',
-    }
+def display_map(map_to_display, score):
+    os.system('cls' if os.name == 'nt' else 'clear') # Efface le terminal
 
-    # Déterminer la largeur maximale de la carte
-    max_width = max(len(row) for row in map_to_display)
-
-    # Affiche chaque ligne de la carte avec les symboles remplacés et ajustés en largeur
-    for row in map_to_display:
-        processed_row = [symbol_mapping.get(symbol, symbol) for symbol in row]
-        padded_row = ''.join(processed_row).ljust(max_width)
-        print(padded_row)
-
+    print("Score:", score)
+    for item in map_to_display:
+        if item == ['\n']:
+            print()
+        else:
+            print(item[0], end='')
 
 def clientUDP():
     mySocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -77,21 +69,30 @@ def clientUDP():
         elif keyboard.is_pressed('d'):
             print("Droite")
             msgClient = "droite"
+        elif keyboard.is_pressed('c'):
+            sys.exit()
+        elif keyboard.is_pressed('esc'):
+            sys.exit()
+
+
 
         mySocket.sendto(bytes(msgClient, 'utf-8'), (HOTE, PORT))
 
-        msgServeur, adresseServeur = mySocket.recvfrom(1024)
+        msgServeur, adresseServeur = mySocket.recvfrom(4096)
         new_map = msgServeur.decode('utf-8')
 
         # Mettre à jour la carte du client de manière incrémentale
         client.set_map(new_map)
 
-        # Afficher la carte mise à jour sur le terminal
+        # Mise à jour du score du client
+        client.update_score(1)
+
+        # Afficher la carte mise à jour et le score sur le terminal
         map_to_display = client.get_map()
-        display_map(map_to_display)
+        display_map(map_to_display, client.score)
 
         # Attendre 0.5 seconde entre chaque mise à jour
-        time.sleep(0.5)
+        time.sleep(0.3)
 
         if msgClient.upper() == "FIN" or msgClient == "":
             break

@@ -15,7 +15,7 @@ Joueur en Multijoueur à Pacman grâce à une liaison UDP.
 ## Comment l'utiliser ?
 Le jeu fonctionne avec deux machines : un serveur et zéro ou plus clients.
 
-*Il faut donc* **exécuter le fichier _serveur.py_ sur la machine hôte avec cette commande :**
+*Il faut donc* **exécuter le fichier _serveur.py_ sur la machine hôte sur le terminale à l'endroit du dossier avec cette commande :**
 ```bash 
 python serveur.py
 ```

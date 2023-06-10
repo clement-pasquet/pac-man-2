@@ -33,10 +33,22 @@ ou
 python3 client.py
 ```
 
-Il y aura surement besoin d'installer la bibliothèque keyboard.
+Il y aura surement besoin d'installer quelques bibliothèques python.
 
 ```bash
 pip install keyboard
+```
+```bash
+pip install os
+```
+```bash
+pip install sys
+```
+```bash
+pip install time
+```
+```bash
+pip install random
 ```
 
 ## Les Commandes

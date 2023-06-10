@@ -33,6 +33,12 @@ ou
 python3 client.py
 ```
 
+Il y aura surement besoin d'installer la bibliothèque keyboard.
+
+```bash
+pip install keyboard
+```
+
 ## Les Commandes
 - **Z pour avancer tout droit**
 - **Q pour aller à gauche**

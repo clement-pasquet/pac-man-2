@@ -58,5 +58,8 @@ pip install random
 - **D pour aller à droite**
 - **C pour quitter ( côté client )**
 
+## Le niveau de difficulté
+Pour modifier le niveau de difficulté, vous pouvez aller sur le fichier **sae_python.py** et ligne 42 modifier la valeur du code `ghosts[i].preference = 1`, le niveau par défaut est de 1.
+
 ## Diagramme de Séquence
 ![hi](./diagramme_de_sequence2.PNG.jpg)
